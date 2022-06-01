@@ -4,14 +4,18 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JFrame;
+
 import kosmo_k.entidades.Entidade;
+import kosmo_k.entidades.Jogador;
 import kosmo_k.graficos.Spritesheet;
-import kosmo_k.jogo.jogador.Jogador;
 
 /**
  * 
@@ -22,7 +26,7 @@ import kosmo_k.jogo.jogador.Jogador;
  */
 
 @SuppressWarnings("serial")
-public class Jogo extends Canvas implements Runnable {
+public class Jogo extends Canvas implements Runnable, KeyListener {
 
 	private JFrame quadro;
 	private Thread thread;
@@ -31,20 +35,23 @@ public class Jogo extends Canvas implements Runnable {
 	private int altura = 144;
 	private int escala = 4;
 	public List<Entidade> entidades;
+	private Jogador jogador;
 
 	// Layer fixa de fundo, iniciada no construtor
 	private BufferedImage imagem;
 	public Spritesheet spritesheet;
 
 	public Jogo() {
-		//Configurando janela e iniciando ela
+		// Comando para implementar o Key Listener
+		addKeyListener(this);
+		// Configurando janela e iniciando ela
 		setPreferredSize(new Dimension(largura * escala, altura * escala));
 		iniciarQuadro();
 		// Inicializando objetos
 		imagem = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_RGB);
 		entidades = new ArrayList<>();
 		spritesheet = new Spritesheet("/Spritesheet_Feiticeiro_Poses.png");
-		Jogador jogador = new Jogador(0, 0, 16, 16, spritesheet.getSprite(0, 128, 64, 64));
+		jogador = new Jogador(0, 0, 16, 16, spritesheet.getSprite(0, 128, 64, 64));
 		entidades.add(jogador);
 	}
 
@@ -121,7 +128,7 @@ public class Jogo extends Canvas implements Runnable {
 		Graphics g = imagem.getGraphics();
 
 		// Desenhando coisas Novas
-		g.setColor(new Color(255, 0, 0));
+		g.setColor(new Color(255, 255, 0));
 		g.fillRect(0, 0, largura, altura);
 
 		// Renderização do Jogo
@@ -186,6 +193,48 @@ public class Jogo extends Canvas implements Runnable {
 			}
 		}
 		parar();
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+
+		// Configuração de movimentação Direita-Esquerda
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
+			jogador.setDireita(true);
+		} else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+			jogador.setEsquerda(true);
+		}
+
+		// Configuração de movimentação Cima-Baixo
+		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
+			jogador.setCima(true);
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
+			jogador.setBaixo(true);
+		}
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// Configuração de movimentação Direita-Esquerda
+				if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
+					jogador.setDireita(false);
+				} else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+					jogador.setEsquerda(false);
+				}
+
+				// Configuração de movimentação Cima-Baixo
+				if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
+					jogador.setCima(false);
+				} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
+					jogador.setBaixo(false);
+				}
+
 	}
 
 }

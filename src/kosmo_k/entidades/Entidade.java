@@ -5,10 +5,10 @@ import java.awt.image.BufferedImage;
 
 public class Entidade {
 
-	private int x;
-	private int y;
-	private int largura;
-	private int altura;
+	protected int x;
+	protected int y;
+	protected int largura;
+	protected int altura;
 	private BufferedImage sprite;
 
 	public Entidade(int x, int y, int largura, int altura, BufferedImage sprite) {
@@ -19,20 +19,20 @@ public class Entidade {
 		this.sprite = sprite;
 	}
 
-	public int getX() {
-		return this.x;
+	public void movimentarDireita(int movimentacao) {
+		this.x += movimentacao;
 	}
 
-	public int getY() {
-		return this.y;
+	public void movimentarEsquerda(int movimentacao) {
+		this.x -= movimentacao;
 	}
 
-	public int getLargura() {
-		return largura;
+	public void movimentarCima(int movimentacao) {
+		this.y -= movimentacao;
 	}
 
-	public int getAltura() {
-		return altura;
+	public void movimentarBaixo(int movimentacao) {
+		this.y += movimentacao;
 	}
 
 	public void tick() {
@@ -40,7 +40,7 @@ public class Entidade {
 	}
 
 	public void renderizar(Graphics g) {
-		g.drawImage(sprite, this.getX(), this.getY(), null);
+		g.drawImage(this.sprite,this.x, this.y, null);
 	}
 
 }
