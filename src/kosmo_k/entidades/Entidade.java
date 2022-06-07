@@ -19,19 +19,19 @@ public class Entidade {
 		this.sprite = sprite;
 	}
 
-	public void movimentarDireita(int movimentacao) {
+	public void movimentarDireita(double movimentacao) {
 		this.x += movimentacao;
 	}
 
-	public void movimentarEsquerda(int movimentacao) {
+	public void movimentarEsquerda(double movimentacao) {
 		this.x -= movimentacao;
 	}
 
-	public void movimentarCima(int movimentacao) {
+	public void movimentarCima(double movimentacao) {
 		this.y -= movimentacao;
 	}
 
-	public void movimentarBaixo(int movimentacao) {
+	public void movimentarBaixo(double movimentacao) {
 		this.y += movimentacao;
 	}
 

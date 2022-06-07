@@ -31,15 +31,15 @@ public class Jogo extends Canvas implements Runnable, KeyListener {
 	private JFrame quadro;
 	private Thread thread;
 	private boolean jogoRodando;
-	private int largura = 256;
-	private int altura = 144;
-	private int escala = 4;
+	private int largura = 1200;
+	private int altura = 765;
+	private int escala = 1;
 	public List<Entidade> entidades;
 	private Jogador jogador;
 
 	// Layer fixa de fundo, iniciada no construtor
 	private BufferedImage imagem;
-	public Spritesheet spritesheet;
+	public static Spritesheet spritesheet;
 
 	public Jogo() {
 		// Comando para implementar o Key Listener
